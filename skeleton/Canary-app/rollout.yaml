@@ -5,6 +5,7 @@ metadata:
   name: rollouts-demo
   labels:
     app: rollouts-demo
+    backstage.io/kubernetes-id: rollouts-demo
 spec:
   replicas: 5
   revisionHistoryLimit: 3
@@ -15,6 +16,7 @@ spec:
     metadata:
       labels:
         app: rollouts-demo
+        backstage.io/kubernetes-id: rollouts-demo
     spec:
       containers:
         - name: rollouts-demo
