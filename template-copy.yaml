@@ -5,7 +5,7 @@ metadata:
   title: GitHub Actions ArgoCD Template
   description: An app with GitHub Actions as CI and ArgoCD
   tags:
-    - ['kubernetes', 'argocd', 'yaml']
+    - argocd
 spec:
   owner: group:backstage
   type: web-app
