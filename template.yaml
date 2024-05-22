@@ -7,8 +7,8 @@ metadata:
   tags:
     - recommended
 spec:
-  owner: web@example.com
-  type: website
+  owner: guests
+  type: web-app
   parameters:
     - title: Provide Application's information
       required:
@@ -30,8 +30,8 @@ spec:
           description: Owner of the component
           ui:field: OwnerPicker
           ui:options:
-            allowedKinds:
-              - Group
+            # allowedKinds:
+            #   - Group
     - title: Choose a location
       required:
         - repoUrl
