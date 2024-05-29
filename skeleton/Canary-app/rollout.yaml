@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: rollouts-demo
-          image: "devendradhoot/rollouts-demo:latest"
+          image: "borkarrohit/rollouts-demo:latest"
           ports:
             - name: http
               containerPort: 80
