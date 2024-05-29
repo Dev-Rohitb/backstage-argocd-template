@@ -5,9 +5,9 @@ metadata:
   title: GitHub Actions ArgoCD Template
   description: An app with GitHub Actions as CI and ArgoCD
   tags:
-    - guests
+    - argocd
 spec:
-  owner: guests  
+  owner: group:backstage
   type: web-app
   parameters:
     - title: Provide Application information
@@ -28,17 +28,31 @@ spec:
           title: Owner
           type: string
           description: Owner of the component
-    - title: Choose a location
+        lifecycle:
+           title : lifecycle
+           type: string
+           description: The Lifecycle stage of the component.
+           enum:
+            - Developer
+            - Experimental
+            - Production
+           ui:widget: select 
+          
+    - title: Choose a Repository Location
       required:
         - repoUrl
       properties:
         repoUrl:
-          title: Repository Location
+          title: Location of the repository
           type: string
           ui:field: RepoUrlPicker
           ui:options:
             allowedHosts:
               - github.com
+            allowedOwners:
+              - DevopsBackstageSME
+              - DevopsPlatformEngineering
+
   steps:
     - id: template
       name: Fetch Skeleton + Template
@@ -53,22 +67,26 @@ spec:
           destination: ${{ parameters.repoUrl | parseRepoUrl }}
           owner: ${{ parameters.owner }}
 
+# Publish the content of the current working directory to our github directory
     - id: publish
-      name: Publish
+      name: Publishing Details
       action: publish:github
       input:
-        allowedHosts: ["github.com"]
-        description: This is ${{ parameters.component_id }}
+        allowedHosts: ['github.com']
+        description: This is ${{ parameters.component_id }} using Backstage
         repoUrl: ${{ parameters.repoUrl }}
-        defaultBranch: main
+        repoVisibility: 'private' # or 'internal' or 'public'
+        defaultBranch: 'main'
 
+# Registering new component in the catalog of backstage.
     - id: register
-      name: Register
+      name: Registering the new Component 
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
         catalogInfoPath: "/catalog-info.yaml"
 
+# Output links  are displayed to the user after the template execution.
   output:
     links:
       - title: Repository
